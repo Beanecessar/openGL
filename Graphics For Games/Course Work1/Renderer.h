@@ -16,13 +16,16 @@ protected:
 	void DrawHeightmap();
 	void DrawWater();
 	void DrawSkybox();
+	void DrawBubbleSphere();
 
 	Shader * lightShader;
-	Shader * reflectShader;
+	//Shader * reflectShader;
+	Shader * bubbleShader;
 	Shader * skyboxShader;
 
 	HeightMap * heightMap;
 	Mesh * quad;
+	Mesh * bubbleSphere;
 
 	Light * light;
 	Camera * camera;
