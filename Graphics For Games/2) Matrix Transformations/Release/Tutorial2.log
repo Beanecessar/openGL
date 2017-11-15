@@ -1,0 +1,6 @@
+﻿  Renderer.cpp
+d:\cppproject\graphics code 2015\nclgl\Keyboard.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+  tutorial2.cpp
+d:\cppproject\graphics code 2015\nclgl\Keyboard.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+LINK : fatal error C1047: 对象或库文件“Release\Renderer.obj”是使用比创建其他对象所用编译器旧的编译器创建的；请重新生成旧的对象和库
+LINK : fatal error LNK1257: 代码生成失败
