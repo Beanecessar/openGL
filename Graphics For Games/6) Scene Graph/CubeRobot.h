@@ -20,4 +20,5 @@ protected:
 	static Mesh * cube;
 	SceneNode * head;
 	SceneNode * leftArm;
-	SceneNode * rightArm;};
+	SceneNode * rightArm;
+};

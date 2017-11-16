@@ -4,7 +4,7 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 	camera = new Camera();
 	heightMap = new HeightMap("../../Textures/terrain.raw");
 	quad = Mesh::GenerateQuad();
-	bubbleSphere = Mesh::GenerateSphere(40,20);
+	bubbleSphere = Mesh::GenerateSphere(80, 40);
 
 	camera->SetPosition(Vector3(RAW_WIDTH * HEIGHTMAP_X / 2.0f,
 		500.0f, RAW_WIDTH * HEIGHTMAP_X));
@@ -21,19 +21,14 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 	lightShader = new Shader("../../Shaders/PerPixelVertex.glsl",
 		"../../Shaders/PerPixelFragment.glsl");
 
-	if (!bubbleShader->LinkProgram() || !lightShader->LinkProgram() ||
-		!skyboxShader->LinkProgram()) {
+	if (!bubbleShader->LinkProgram() || !lightShader->LinkProgram() || !skyboxShader->LinkProgram()) {
 
 		return;
 	}
 
-	heightMap->SetTexture(SOIL_load_OGL_texture(
-		"../../Textures/Barren Reds.JPG", SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
+	heightMap->SetTexture(SOIL_load_OGL_texture("../../Textures/Barren Reds.JPG", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
 
-	heightMap->SetBumpMap(SOIL_load_OGL_texture(
-		"../../Textures/Barren RedsDOT3.JPG", SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
+	heightMap->SetBumpMap(SOIL_load_OGL_texture("../../Textures/Barren RedsDOT3.JPG", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
 	cubeMap = SOIL_load_OGL_cubemap(
 		"../../Textures/skybox/blood_ft.tga", "../../Textures/skybox/blood_bk.tga",
 		"../../Textures/skybox/blood_up.tga", "../../Textures/skybox/blood_dn.tga",
@@ -101,9 +96,15 @@ void Renderer::DrawSkybox() {
 void Renderer::DrawBubbleSphere() {
 	SetCurrentShader(bubbleShader);
 
-	modelMatrix.ToIdentity();
+	float heightX = 5.0f;
+	float heightY = 5.0f;
+	float heightZ = 5.0f;
+
+	modelMatrix =
+		Matrix4::Scale(Vector3(heightX, heightY, heightZ));
 
 	UpdateShaderMatrices();
+
 	bubbleSphere->Draw();
 
 	glUseProgram(0);
