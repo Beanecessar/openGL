@@ -1,10 +1,11 @@
 #include "Renderer.h"
+#include "GLTools.h"
 
 Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 	camera = new Camera();
 	heightMap = new HeightMap("../../Textures/terrain.raw");
 	quad = Mesh::GenerateQuad();
-	bubbleSphere = Mesh::GenerateSphere(80, 40);
+	//bubbleSphere = Mesh::GenerateSphere(80, 40);
 
 	camera->SetPosition(Vector3(RAW_WIDTH * HEIGHTMAP_X / 2.0f,
 		500.0f, RAW_WIDTH * HEIGHTMAP_X));
@@ -14,8 +15,8 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 		Vector4(0.9f, 0.9f, 1.0f, 1),
 		(RAW_WIDTH * HEIGHTMAP_X) / 2.0f);
 
-	bubbleShader = new Shader(SHADERDIR"bubbleVertex.glsl",
-		SHADERDIR"bubbleFragment.glsl");
+	bubbleShader = new Shader(SHADERDIR"debugVertex.glsl",
+		SHADERDIR"debugFragment.glsl");
 	skyboxShader = new Shader(SHADERDIR"skyboxVertex.glsl",
 		SHADERDIR"skyboxFragment.glsl");
 	lightShader = new Shader("../../Shaders/PerPixelVertex.glsl",
@@ -69,13 +70,13 @@ Renderer ::~Renderer(void) {
 void Renderer::UpdateScene(float msec) {
 	camera->UpdateCamera(msec);
 	viewMatrix = camera->BuildViewMatrix();
-	waterRotate += msec / 1000.0f;
 }
 void Renderer::RenderScene() {
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
-	DrawSkybox();
-	DrawHeightmap();
+	
+	//DrawSkybox();
+	//DrawHeightmap();
 	DrawBubbleSphere();
 	//DrawWater();
 
@@ -94,18 +95,23 @@ void Renderer::DrawSkybox() {
 }
 
 void Renderer::DrawBubbleSphere() {
-	SetCurrentShader(bubbleShader);
+	/*SetCurrentShader(bubbleShader);
 
-	float heightX = 5.0f;
-	float heightY = 5.0f;
-	float heightZ = 5.0f;
-
-	modelMatrix =
-		Matrix4::Scale(Vector3(heightX, heightY, heightZ));
+	modelMatrix.ToIdentity();
 
 	UpdateShaderMatrices();
 
 	bubbleSphere->Draw();
+
+	glUseProgram(0);*/
+
+	SetCurrentShader(bubbleShader);
+
+	GLTriangleBatch blackHole;
+
+	gltMakeSphere(blackHole, 5.0, 20, 40);
+
+	blackHole.Draw();
 
 	glUseProgram(0);
 }

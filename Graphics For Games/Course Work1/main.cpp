@@ -1,4 +1,5 @@
 #pragma comment(lib, "nclgl.lib")
+#pragma comment(lib, "gltool_staticd.lib")
 
 #include "../../nclgl/window.h"
 #include "Renderer.h"

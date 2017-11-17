@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Main Graphics Tutorials", "Main Graphics Tutorials", "{26FF1E94-61DD-4E24-A071-50FA11CAC038}"
 EndProject
@@ -83,6 +83,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Course Work", "Course Work", "{1A76F7E1-4C66-452F-9CA5-43DFE4A0EF00}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Course Work 1", "Course Work1\Course Work1.vcxproj", "{39CC3342-033B-49FD-994C-9C8FD95A02B9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7E98459A-64AE-4734-A537-4AB52ED637E1} = {7E98459A-64AE-4734-A537-4AB52ED637E1}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gltools", "..\GLTools\gltools.vcxproj", "{7E98459A-64AE-4734-A537-4AB52ED637E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -232,6 +237,12 @@ Global
 		{39CC3342-033B-49FD-994C-9C8FD95A02B9}.Release|Win32.Build.0 = Release|Win32
 		{39CC3342-033B-49FD-994C-9C8FD95A02B9}.Release|x64.ActiveCfg = Release|x64
 		{39CC3342-033B-49FD-994C-9C8FD95A02B9}.Release|x64.Build.0 = Release|x64
+		{7E98459A-64AE-4734-A537-4AB52ED637E1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7E98459A-64AE-4734-A537-4AB52ED637E1}.Debug|Win32.Build.0 = Debug|Win32
+		{7E98459A-64AE-4734-A537-4AB52ED637E1}.Debug|x64.ActiveCfg = Debug|Win32
+		{7E98459A-64AE-4734-A537-4AB52ED637E1}.Release|Win32.ActiveCfg = Release|Win32
+		{7E98459A-64AE-4734-A537-4AB52ED637E1}.Release|Win32.Build.0 = Release|Win32
+		{7E98459A-64AE-4734-A537-4AB52ED637E1}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -259,5 +270,8 @@ Global
 		{5E152084-769D-459E-B59A-C8F05E165612} = {B1D006B4-76BF-41B1-8DE5-1828E5BC4E74}
 		{909A2CFC-6E55-4776-8B60-93B44103A9CF} = {B12FA29E-1613-4E55-9C1D-B7DCD8A760D8}
 		{39CC3342-033B-49FD-994C-9C8FD95A02B9} = {1A76F7E1-4C66-452F-9CA5-43DFE4A0EF00}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CD7422B3-6557-4E96-BE25-1789500DB659}
 	EndGlobalSection
 EndGlobal
