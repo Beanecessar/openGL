@@ -48,6 +48,35 @@ Mesh::~Mesh(void) {
 	glDeleteTextures(1, &bumpTexture); // Just like the texture map ...
 }
 
+Mesh* Mesh::GenerateDebugCoord() {
+	Mesh* m = new Mesh();
+	m->numVertices = 6;
+	m->type = GL_LINES;
+
+	m->vertices = new Vector3[m->numVertices];
+	m->vertices[0] = Vector3(0.0f, 0.0f, 0.0f);
+	m->vertices[1] = Vector3(1.0f, 0.0f, 0.0f);
+
+	m->vertices[2] = Vector3(0.0f, 0.0f, 0.0f);
+	m->vertices[3] = Vector3(0.0f, 1.0f, 0.0f);
+
+	m->vertices[4] = Vector3(0.0f, 0.0f, 0.0f);
+	m->vertices[5] = Vector3(0.0f, 0.0f, 1.0f);
+
+	m->colours = new Vector4[m->numVertices];
+	m->colours[0] = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
+	m->colours[1] = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
+
+	m->colours[2] = Vector4(0.0f, 1.0f, 0.0f, 1.0f);
+	m->colours[3] = Vector4(0.0f, 1.0f, 0.0f, 1.0f);
+
+	m->colours[4] = Vector4(0.0f, 0.0f, 1.0f, 1.0f);
+	m->colours[5] = Vector4(0.0f, 0.0f, 1.0f, 1.0f);
+
+	m->BufferData();
+	return m;
+}
+
 Mesh* Mesh::GenerateTriangle() {
 	Mesh* m = new Mesh();
 	m->numVertices = 3;
@@ -137,8 +166,8 @@ Mesh* Mesh::GenerateSphere(unsigned subdivision_m, unsigned subdivision_n) {
 
 	Mesh* m = new Mesh();
 
-	m->numVertices = subdivision_m*subdivision_n * 4;
-	m->numIndices = subdivision_m*subdivision_n * 6;
+	m->numVertices = (subdivision_m + 1)*subdivision_n * 4;
+	m->numIndices = (subdivision_m + 1)*subdivision_n * 6;
 	m->type = GL_TRIANGLE_STRIP;
 
 	m->vertices = new Vector3[m->numVertices];
@@ -148,7 +177,7 @@ Mesh* Mesh::GenerateSphere(unsigned subdivision_m, unsigned subdivision_n) {
 	m->indices = new GLuint[m->numIndices];
 
 	unsigned index = 0;
-	for (unsigned i = 0; i < subdivision_m; i++)
+	for (unsigned i = 0; i < (subdivision_m + 1); i++)
 	{
 		for (unsigned j = 0; j < subdivision_n; j++)
 		{
@@ -156,7 +185,7 @@ Mesh* Mesh::GenerateSphere(unsigned subdivision_m, unsigned subdivision_n) {
 			m->textureCoords[index] = Vector2(angleZ / PI, angleXY / D_PI);
 			m->colours[index] = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 			m->normals[index] = m->vertices[index];
-			
+
 			++index;
 
 			angleXY += addAngleXY;
@@ -165,13 +194,13 @@ Mesh* Mesh::GenerateSphere(unsigned subdivision_m, unsigned subdivision_n) {
 	}
 
 	index = 0;
-	for (unsigned i = 0; i < subdivision_m; i++)
+	for (unsigned i = 0; i < (subdivision_m + 1); i++)
 	{
 		for (unsigned j = 0; j < subdivision_n; j++)
 		{
-			m->indices[index++] = i*subdivision_m+j;
+			m->indices[index++] = i*subdivision_m + j;
 			m->indices[index++] = (i + 1)*subdivision_m + j;
-			m->indices[index++] = (i + 1)*subdivision_m + (j + 1)%subdivision_n;
+			m->indices[index++] = (i + 1)*subdivision_m + (j + 1) % subdivision_n;
 
 			m->indices[index++] = i*subdivision_m + j;
 			m->indices[index++] = (i + 1)*subdivision_m + (j + 1) % subdivision_n;

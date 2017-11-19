@@ -3,6 +3,9 @@
 #include "../../nclgl/OGLRenderer.h"
 #include "../../nclgl/Camera.h"
 #include "../../nclgl/HeightMap.h"
+#include "GLTools.h"
+#include "../../nclgl/Printer.h"
+#include "../../nclgl/SceneNode.h"
 
 class Renderer : public OGLRenderer {
 public:
@@ -14,23 +17,40 @@ public:
 
 protected:
 	void DrawHeightmap();
-	void DrawWater();
+	void DrawDebugCoord();
 	void DrawSkybox();
 	void DrawBubbleSphere();
+	void DrawFrameRate();
 
-	Shader * lightShader;
-	//Shader * reflectShader;
-	Shader * bubbleShader;
-	Shader * skyboxShader;
+	Shader* debugShader;
+	Shader* lightShader;
+	Shader* fpsShader;
+	Shader* bubbleShader;
+	Shader* skyboxShader;
 
-	HeightMap * heightMap;
-	Mesh * quad;
-	Mesh * bubbleSphere;
+	HeightMap* heightMap;
+	Mesh* quad;
+	Mesh* bubbleSphere;
+	Mesh* debugCoord;
 
-	Light * light;
-	Camera * camera;
+	Printer printer;
+
+	SceneNode* root;
+	SceneNode* mountainScene;
+	SceneNode* mountain;
+	SceneNode* mountainSky;
+	SceneNode* mountainEnviroSphere;
+	SceneNode* matrixScene;
+	SceneNode* matrixFloor;
+	SceneNode** matrixBuildings;
+	unsigned numOfBuildings;
+
+	Light* light;
+	Camera* camera;
 
 	GLuint cubeMap;
 
-	float waterRotate;
+	short frameCounter;
+
+	char fps[20];
 };

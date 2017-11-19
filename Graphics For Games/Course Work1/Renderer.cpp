@@ -1,12 +1,10 @@
 #include "Renderer.h"
-#include "GLTools.h"
 
 Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
-	camera = new Camera();
-	heightMap = new HeightMap("../../Textures/terrain.raw");
-	quad = Mesh::GenerateQuad();
-	//bubbleSphere = Mesh::GenerateSphere(80, 40);
+	frameCounter = 0;
+	sprintf_s(fps, "%s", "0 fps");
 
+	camera = new Camera();
 	camera->SetPosition(Vector3(RAW_WIDTH * HEIGHTMAP_X / 2.0f,
 		500.0f, RAW_WIDTH * HEIGHTMAP_X));
 
@@ -15,15 +13,42 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 		Vector4(0.9f, 0.9f, 1.0f, 1),
 		(RAW_WIDTH * HEIGHTMAP_X) / 2.0f);
 
-	bubbleShader = new Shader(SHADERDIR"debugVertex.glsl",
+	debugCoord = Mesh::GenerateDebugCoord();
+
+	debugShader = new Shader(SHADERDIR"debugVertex.glsl",
 		SHADERDIR"debugFragment.glsl");
+	fpsShader = new Shader(SHADERDIR"fontVertex.glsl",
+		SHADERDIR"debugFragment.glsl");
+	bubbleShader = new Shader(SHADERDIR"bubbleVertex.glsl",
+		SHADERDIR"bubbleFragment.glsl");
 	skyboxShader = new Shader(SHADERDIR"skyboxVertex.glsl",
 		SHADERDIR"skyboxFragment.glsl");
 	lightShader = new Shader("../../Shaders/PerPixelVertex.glsl",
 		"../../Shaders/PerPixelFragment.glsl");
 
-	if (!bubbleShader->LinkProgram() || !lightShader->LinkProgram() || !skyboxShader->LinkProgram()) {
+	mountainScene = new SceneNode();
 
+	heightMap = new HeightMap("../../Textures/terrain.raw");
+	mountain = new SceneNode(heightMap);
+	mountain->SetShader(lightShader);
+	mountain->SetLight(light);
+	mountain->AddUniformfv(new Uniformfv("", (float *)& camera->GetPosition()));
+	mountainScene->AddChild(mountain);
+
+	quad = Mesh::GenerateQuad();
+	mountainSky = new SceneNode(quad);
+	mountainSky->SetShader(skyboxShader);
+	mountainSky->SetSkybox(true);
+	mountainScene->AddChild(mountainSky);
+
+	bubbleSphere = Mesh::GenerateSphere(80, 40);
+	mountainEnviroSphere = new SceneNode(bubbleSphere);
+	mountainEnviroSphere->SetModelScale(Vector3(500.0f, 500.0f, 500.0f));
+	mountainEnviroSphere->SetTransform(Matrix4::Translation(Vector3(1000.0f, 2000.0f, 1000.0f)));
+	mountainEnviroSphere->SetShader(bubbleShader);
+	mountainScene->AddChild(mountainEnviroSphere);
+
+	if (!debugShader->LinkProgram() || !bubbleShader->LinkProgram() || !lightShader->LinkProgram() || !skyboxShader->LinkProgram()) {
 		return;
 	}
 
@@ -37,15 +62,12 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 		SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, 0);
 
 	if (!cubeMap || !heightMap->GetTexture() || !heightMap->GetBumpMap()) {
-
 		return;
 	}
 
-	SetTextureRepeating(quad->GetTexture(), true);
 	SetTextureRepeating(heightMap->GetTexture(), true);
 	SetTextureRepeating(heightMap->GetBumpMap(), true);
 	init = true;
-	waterRotate = 0.0f;
 
 	projMatrix = Matrix4::Perspective(1.0f, 15000.0f,
 		(float)width / (float)height, 45.0f);
@@ -70,17 +92,46 @@ Renderer ::~Renderer(void) {
 void Renderer::UpdateScene(float msec) {
 	camera->UpdateCamera(msec);
 	viewMatrix = camera->BuildViewMatrix();
+	frameCounter = (frameCounter+1) % 60;
+	if (frameCounter == 0) {
+		sprintf_s(fps, "%d%s", (int)(1000/msec)," fps");
+	}
 }
 void Renderer::RenderScene() {
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
-	
-	//DrawSkybox();
-	//DrawHeightmap();
+	DrawSkybox();
+	DrawDebugCoord();
+	DrawHeightmap();
 	DrawBubbleSphere();
-	//DrawWater();
+	DrawFrameRate();
 
 	SwapBuffers();
+}
+
+void Renderer::DrawFrameRate() {
+	SetCurrentShader(debugShader);
+
+	UpdateShaderMatrices();
+
+	printer.setPosition(Vector2(1.0f, 1.0f));
+	printer.setColour(Vector4(1.0f, 0.0f, 0.0f, 1.0f));
+	printer.print(fps);
+
+	glUseProgram(0);
+}
+
+void Renderer::DrawDebugCoord() {
+	SetCurrentShader(debugShader);
+
+	//glLineWidth(10.0f);
+	modelMatrix = Matrix4::Scale(Vector3(5000.0f, 5000.0f, 5000.0f));
+
+	UpdateShaderMatrices();
+
+	debugCoord->Draw();
+
+	glUseProgram(0);
 }
 
 void Renderer::DrawSkybox() {
@@ -95,25 +146,23 @@ void Renderer::DrawSkybox() {
 }
 
 void Renderer::DrawBubbleSphere() {
-	/*SetCurrentShader(bubbleShader);
-
-	modelMatrix.ToIdentity();
+	SetCurrentShader(bubbleShader);
 
 	UpdateShaderMatrices();
 
 	bubbleSphere->Draw();
 
-	glUseProgram(0);*/
+	glUseProgram(0);
 
-	SetCurrentShader(bubbleShader);
+	/*SetCurrentShader(debugShader);
 
-	GLTriangleBatch blackHole;
+	modelMatrix = Matrix4::Scale(Vector3(50.0f, 50.0f, 50.0f));
 
-	gltMakeSphere(blackHole, 5.0, 20, 40);
+	UpdateShaderMatrices();
 
 	blackHole.Draw();
 
-	glUseProgram(0);
+	glUseProgram(0);*/
 }
 
 void Renderer::DrawHeightmap() {

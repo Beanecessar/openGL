@@ -1,24 +1,4 @@
-﻿  Window.cpp
-d:\cppproject\opengl\nclgl\window.cpp : fatal error C1041: 无法打开程序数据库“D:\CPPproject\openGL\nclgl\Debug\nclgl.idb”；如果要将多个 CL.EXE 写入同一个 .PDB 文件，请使用 /FS
-  Shader.cpp
-  SceneNode.cpp
-  Quaternion.cpp
-  Plane.cpp
-  OGLRenderer.cpp
-  OBJMesh.cpp
-  Mouse.cpp
-  Mesh.cpp
-d:\cppproject\opengl\nclgl\mesh.cpp(132): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-d:\cppproject\opengl\nclgl\mesh.cpp(133): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-d:\cppproject\opengl\nclgl\mesh.cpp(156): warning C4244: “参数”: 从“double”转换到“const float”，可能丢失数据
-  MD5Node.cpp
+﻿  MD5Node.cpp
   MD5Mesh.cpp
-  MD5FileData.cpp
-  MD5Anim.cpp
-  Matrix4.cpp
-  Keyboard.cpp
-  HeightMap.cpp
-  GameTimer.cpp
-  Frustum.cpp
-  Camera.cpp
   正在生成代码...
+  nclgl.vcxproj -> D:\CPPproject\openGL\Graphics For Games\Debug\nclgl.lib

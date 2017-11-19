@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\..\GLTools\include;..\..\SOIL;..\..\GLEW\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\GLTools\lib;..\..\GLTools\$(configuration);..\$(configuration);..\..\GLEW\lib\$(Configuration);..\..\SOIL\$(configuration);$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\glut;..\..\GLTools\include;..\..\SOIL;..\..\GLEW\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\glut;..\..\GLTools\lib;..\..\GLTools\$(configuration);..\$(configuration);..\..\GLEW\lib\$(Configuration);..\..\SOIL\$(configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

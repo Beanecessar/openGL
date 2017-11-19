@@ -10,6 +10,7 @@ public:
 	~Mesh(void);
 
 	virtual void Draw();
+	static Mesh* GenerateDebugCoord();
 	static Mesh* GenerateTriangle();
 	static Mesh * GenerateQuad();
 	static Mesh* GenerateSphere(unsigned subdivision_m, unsigned subdivision_n);

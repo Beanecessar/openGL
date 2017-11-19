@@ -5,7 +5,7 @@
 #include "Renderer.h"
 
 int main() {
-	Window w("Course Work", 800, 600, false);
+	Window w("Course Work", 1600, 900, false);
 	if (!w.HasInitialised()) {
 		return -1;
 	}

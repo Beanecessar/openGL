@@ -1,0 +1,6 @@
+1.debug: FPS
+2.debug: shadow mapping
+3.debug: environment mapping
+4.todo: scene management
+5.todo: matrix effect
+6.todo: bloom effect

@@ -4,6 +4,7 @@
 #include "Vector3.h"
 #include "Vector4.h"
 #include "Mesh.h"
+#include "Uniform.h"
 #include <vector>
 
 class SceneNode {
@@ -17,6 +18,41 @@ public:
 
 	Vector4 GetColour() const { return colour; }
 	void SetColour(Vector4 c) { colour = c; }
+
+	Shader* GetShader() const { return shader; }
+	void SetShader(Shader* s) { shader = s; }
+
+	Light* GetLight() const { return light; }
+	void SetLight(Light* l) { light = l; }
+
+	void AddUniformfv(Uniformfv* ufv) {
+		uniformfv.push_back(ufv);
+	}
+	std::vector <Uniformfv *>::const_iterator GetUniformfvIteratorStart() {
+		return uniformfv.begin();
+	}
+	std::vector <Uniformfv *>::const_iterator GetUniformfvIteratorEnd() {
+		return uniformfv.end();
+	}
+	bool UniformfvIsEmpty() {
+		return uniformfv.empty();
+	}
+
+	void AddUniformi(Uniformi* ui) {
+		uniformi.push_back(ui);
+	}
+	std::vector <Uniformi *>::const_iterator GetUniformiIteratorStart() {
+		return uniformi.begin();
+	}
+	std::vector <Uniformi *>::const_iterator GetUniformiIteratorEnd() {
+		return uniformi.end();
+	}
+	bool UniformiIsEmpty() {
+		return uniformi.empty();
+	}
+
+	bool CheckSkybox() const { return isSkybox; }
+	void SetSkybox(bool s) { isSkybox = s; }
 
 	Vector3 GetModelScale() const { return modelScale; }
 	void SetModelScale(Vector3 s) { modelScale = s; }
@@ -53,7 +89,12 @@ protected:
 	Matrix4 transform;
 	Vector3 modelScale;
 	Vector4 colour;
+	Shader * shader;
+	Light * light;
 	std::vector <SceneNode *> children;
 	float distanceFromCamera;
 	float boundingRadius;
+	bool isSkybox;
+	std::vector<Uniformfv *> uniformfv;
+	std::vector<Uniformi *> uniformi;
 };
