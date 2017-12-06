@@ -19,7 +19,9 @@ vec3 worldPos;
 vec4 shadowProj; // New !
 } IN;
 
-out vec4 FragColor;void main(void) {
+out vec4 FragColor;
+
+void main(void) {
 	mat3 TBN = mat3(IN.tangent, IN.binormal, IN.normal);
 	vec3 normal = normalize(TBN *
 		(texture(bumpTex, IN.texCoord).rgb * 2.0 - 1.0));
@@ -48,4 +50,5 @@ out vec4 FragColor;void main(void) {
 	colour += (lightColour.rgb * sFactor) * 0.33;
 	FragColor = vec4(colour * atten * lambert, diffuse.a);
 	FragColor.rgb += (diffuse.rgb * lightColour.rgb) * 0.1;
+	//FragColor=vec4(1,0,0,1);
 }

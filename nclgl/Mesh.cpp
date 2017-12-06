@@ -29,6 +29,7 @@ Mesh::Mesh(void) {
 
 	tangents = NULL;
 	bumpTexture = 0;
+	extraTexture = 0;
 }
 
 Mesh::~Mesh(void) {
@@ -72,6 +73,23 @@ Mesh* Mesh::GenerateDebugCoord() {
 
 	m->colours[4] = Vector4(0.0f, 0.0f, 1.0f, 1.0f);
 	m->colours[5] = Vector4(0.0f, 0.0f, 1.0f, 1.0f);
+
+	m->BufferData();
+	return m;
+}
+
+Mesh* Mesh::GenerateRainDrop(float length) {
+	Mesh* m = new Mesh();
+	m->numVertices = 2;
+	m->type = GL_LINES;
+
+	m->vertices = new Vector3[m->numVertices];
+	m->vertices[0] = Vector3(0.0f, 0.0f, 0.0f);
+	m->vertices[1] = Vector3(0.0f, length, 0.0f);
+
+	m->colours = new Vector4[m->numVertices];
+	m->colours[0] = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+	m->colours[1] = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 
 	m->BufferData();
 	return m;
@@ -153,6 +171,193 @@ Mesh * Mesh::GenerateQuad() {
 	}
 	m->BufferData();
 
+	return m;
+}
+
+Mesh* Mesh::GenerateBuildingRoof() {
+	Mesh * m = new Mesh();
+
+	m->numVertices = 4;
+	m->type = GL_TRIANGLE_STRIP;
+
+	m->vertices = new Vector3[m->numVertices];
+	m->textureCoords = new Vector2[m->numVertices];
+	m->colours = new Vector4[m->numVertices];
+	m->normals = new Vector3[m->numVertices];
+	m->tangents = new Vector3[m->numVertices];
+
+	m->vertices[0] = Vector3(-0.5f, 0.0f, -0.5f);
+	m->vertices[1] = Vector3(-0.5f, 0.0f, 0.5f);
+	m->vertices[2] = Vector3(0.5f, 0.0f, -0.5f);
+	m->vertices[3] = Vector3(0.5f, 0.0f, 0.5f);
+
+	for (int i = 0; i < 4; ++i) {
+		m->colours[i] = Vector4(0.0f, 0.0f, 0.0f, 1.0f);
+		m->normals[i] = Vector3(0.0f, 1.0f, 0.0f);
+		m->tangents[i] = Vector3(1.0f, 0.0f, 0.0f);
+	}
+	m->BufferData();
+
+	return m;
+}
+
+Mesh* Mesh::GenerateBuildingWall(float height) {
+	/*Mesh* m = new Mesh();
+	m->numVertices = 10;
+	m->numIndices = 24;
+	m->type = GL_TRIANGLE_STRIP;
+
+	m->vertices = new Vector3[m->numVertices];
+	m->vertices[0] = Vector3(-0.5f, 0.0f, -0.5f);
+	m->vertices[1] = Vector3(-0.5f, 0.0f, 0.5f);
+	m->vertices[2] = Vector3(0.5f, 0.0f, 0.5f);
+	m->vertices[3] = Vector3(0.5f, 0.0f, -0.5f);
+	m->vertices[4] = Vector3(-0.5f, 0.0f, -0.5f);
+	m->vertices[5] = Vector3(-0.5f, height, -0.5f);
+	m->vertices[6] = Vector3(-0.5f, height, 0.5f);
+	m->vertices[7] = Vector3(0.5f, height, 0.5f);
+	m->vertices[8] = Vector3(0.5f, height, -0.5f);
+	m->vertices[9] = Vector3(-0.5f, height, -0.5f);
+
+	m->textureCoords = new Vector2[m->numVertices];
+	m->textureCoords[0] = Vector2(0.0f, height*0.25);
+	m->textureCoords[1] = Vector2(0.25f, height*0.25);
+	m->textureCoords[2] = Vector2(0.5f, height*0.25);
+	m->textureCoords[3] = Vector2(0.75f, height*0.25);
+	m->textureCoords[4] = Vector2(1.0f, height*0.25);
+	m->textureCoords[5] = Vector2(0.0f, 0.0f);
+	m->textureCoords[6] = Vector2(0.25f, 0.0f);
+	m->textureCoords[7] = Vector2(0.5f, 0.0f);
+	m->textureCoords[8] = Vector2(0.75f, 0.0f);
+	m->textureCoords[9] = Vector2(1.0f, 0.0f);
+
+	m->normals = new Vector3[m->numVertices];
+	m->normals[0] = Vector3(-1.0f,0,-1.0f);
+	m->normals[1] = Vector3(-1.0f, 0, 1.0f);
+	m->normals[2] = Vector3(1.0f, 0, 1.0f);
+	m->normals[3] = Vector3(1.0f, 0, -1.0f);
+	m->normals[4] = Vector3(-1.0f, 0, -1.0f);
+	m->normals[5] = Vector3(-1.0f, 0, -1.0f);
+	m->normals[6] = Vector3(-1.0f, 0, 1.0f);
+	m->normals[7] = Vector3(1.0f, 0, 1.0f);
+	m->normals[8] = Vector3(1.0f, 0, -1.0f);
+	m->normals[9] = Vector3(-1.0f, 0, -1.0f);
+
+	m->indices = new GLuint[m->numIndices];
+
+	unsigned index = 0;
+
+	auto addIndex = [&index,&m](GLuint x, GLuint y, GLuint z ,GLuint w) {
+		m->indices[index++] = x;
+		m->indices[index++] = y;
+		m->indices[index++] = z;
+
+		m->indices[index++] = y;
+		m->indices[index++] = z;
+		m->indices[index++] = w;
+	};
+
+	addIndex(0, 1, 5, 6);
+	addIndex(1, 2, 6, 7);
+	addIndex(2, 3, 7, 8);
+	addIndex(3, 4, 8, 9);
+
+	m->BufferData();
+	return m;*/
+	Mesh* m = new Mesh();
+	m->numVertices = 16;
+	m->numIndices = 24;
+	m->type = GL_TRIANGLES;
+
+	m->vertices = new Vector3[m->numVertices];
+	m->vertices[0] = Vector3(-0.5f, 0.0f, -0.5f);
+	m->vertices[1] = Vector3(-0.5f, 0.0f, 0.5f);
+	m->vertices[2] = Vector3(-0.5f, height, -0.5f);
+	m->vertices[3] = Vector3(-0.5f, height, 0.5f);
+
+	m->vertices[4] = Vector3(-0.5f, 0.0f, 0.5f);
+	m->vertices[5] = Vector3(0.5f, 0.0f, 0.5f);;
+	m->vertices[6] = Vector3(-0.5f, height, 0.5f);
+	m->vertices[7] = Vector3(0.5f, height, 0.5f);
+
+	m->vertices[8] = Vector3(0.5f, 0.0f, 0.5f);
+	m->vertices[9] = Vector3(0.5f, 0.0f, -0.5f);
+	m->vertices[10] = Vector3(0.5f, height, 0.5f);
+	m->vertices[11] = Vector3(0.5f, height, -0.5f);
+
+	m->vertices[12] = Vector3(0.5f, 0.0f, -0.5f);
+	m->vertices[13] = Vector3(-0.5f, 0.0f, -0.5f);
+	m->vertices[14] = Vector3(0.5f, height, -0.5f);
+	m->vertices[15] = Vector3(-0.5f, height, -0.5f);
+
+	m->textureCoords = new Vector2[m->numVertices];
+	m->textureCoords[0] = Vector2(0.0f, height*0.25);
+	m->textureCoords[1] = Vector2(0.25f, height*0.25);
+	m->textureCoords[2] = Vector2(0.0f, 0.0f);
+	m->textureCoords[3] = Vector2(0.25f, 0.0f);
+
+	m->textureCoords[4] = Vector2(0.25f, height*0.25);
+	m->textureCoords[5] = Vector2(0.5f, height*0.25);
+	m->textureCoords[6] = Vector2(0.25f, 0.0f);
+	m->textureCoords[7] = Vector2(0.5f, 0.0f);
+
+	m->textureCoords[8] = Vector2(0.5f, height*0.25);
+	m->textureCoords[9] = Vector2(0.75f, height*0.25);
+	m->textureCoords[10] = Vector2(0.5f, 0.0f);
+	m->textureCoords[11] = Vector2(0.75f, 0.0f);
+
+	m->textureCoords[12] = Vector2(0.75f, height*0.25);
+	m->textureCoords[13] = Vector2(1.0f, height*0.25);
+	m->textureCoords[14] = Vector2(0.75f, 0.0f);
+	m->textureCoords[15] = Vector2(1.0f, 0.0f);
+
+	m->normals = new Vector3[m->numVertices];
+	m->normals[0] = Vector3(-1.0f, 0, 0);
+	m->normals[1] = Vector3(-1.0f, 0, 0);
+	m->normals[2] = Vector3(-1.0f, 0, 0);
+	m->normals[3] = Vector3(-1.0f, 0, 0);
+
+	m->normals[4] = Vector3(0, 0, 1.0f);
+	m->normals[5] = Vector3(0, 0, 1.0f);
+	m->normals[6] = Vector3(0, 0, 1.0f);
+	m->normals[7] = Vector3(0, 0, 1.0f);
+
+	m->normals[8] = Vector3(1.0f, 0, 0);
+	m->normals[9] = Vector3(1.0f, 0, 0);
+	m->normals[10] = Vector3(1.0f, 0, 0);
+	m->normals[11] = Vector3(1.0f, 0, 0);
+
+	m->normals[12] = Vector3(0, 0, -1.0f);
+	m->normals[13] = Vector3(0, 0, -1.0f);
+	m->normals[14] = Vector3(0, 0, -1.0f);
+	m->normals[15] = Vector3(0, 0, -1.0f);
+
+	m->indices = new GLuint[m->numIndices];
+
+	unsigned index = 0;
+
+	auto addIndex = [&index, &m](GLuint x, GLuint y, GLuint z, GLuint w) {
+		m->indices[index++] = x;
+		m->indices[index++] = y;
+		m->indices[index++] = z;
+
+		m->indices[index++] = y;
+		m->indices[index++] = z;
+		m->indices[index++] = w;
+	};
+
+	addIndex(0, 1, 2, 3);
+	addIndex(4, 5, 6, 7);
+	addIndex(8, 9, 10, 11);
+	addIndex(12, 13, 14, 15);
+
+	/*for(unsigned i=0;i<m->numIndices;++i)
+	{
+		Vector3 t = m->normals[m->indices[i]];
+		std::cout << i << ": " << t.x << ", " << t.y << ", " <<t.z<< std::endl;
+	}*/
+
+	m->BufferData();
 	return m;
 }
 
@@ -369,6 +574,9 @@ void Mesh::Draw() {
 
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, bumpTexture);
+
+	glActiveTexture(GL_TEXTURE2);
+	glBindTexture(GL_TEXTURE_2D, extraTexture);
 
 	glBindVertexArray(arrayObject);
 	if (bufferObject[INDEX_BUFFER]) {// Added by the index buffers tut ...

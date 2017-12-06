@@ -1,0 +1,12 @@
+﻿  SceneNode.cpp
+  Mesh.cpp
+d:\opengl\nclgl\mesh.cpp(205): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
+d:\opengl\nclgl\mesh.cpp(206): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
+d:\opengl\nclgl\mesh.cpp(207): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
+d:\opengl\nclgl\mesh.cpp(208): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
+d:\opengl\nclgl\mesh.cpp(209): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
+d:\opengl\nclgl\mesh.cpp(241): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\opengl\nclgl\mesh.cpp(242): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\opengl\nclgl\mesh.cpp(265): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
+  Generating Code...
+  nclgl.vcxproj -> D:\openGL\Graphics For Games\Debug\nclgl.lib

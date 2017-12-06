@@ -11,8 +11,11 @@ public:
 
 	virtual void Draw();
 	static Mesh* GenerateDebugCoord();
+	static Mesh* GenerateRainDrop(float lenth);
 	static Mesh* GenerateTriangle();
-	static Mesh * GenerateQuad();
+	static Mesh* GenerateBuildingRoof();
+	static Mesh* GenerateBuildingWall(float height);
+	static Mesh* GenerateQuad();
 	static Mesh* GenerateSphere(unsigned subdivision_m, unsigned subdivision_n);
 
 	void SetTexture(GLuint tex) { texture = tex; }
@@ -20,6 +23,9 @@ public:
 
 	void SetBumpMap(GLuint tex) { bumpTexture = tex; }
 	GLuint GetBumpMap() { return bumpTexture; }
+
+	void SetExtraTexture(GLuint tex) { extraTexture = tex; }
+	GLuint GetExtraTexture() { return extraTexture; }
 protected:
 	void BufferData();
 	GLuint arrayObject;
@@ -46,4 +52,5 @@ protected:
 
 	Vector3 * tangents;
 	GLuint bumpTexture;
+	GLuint extraTexture;
 };

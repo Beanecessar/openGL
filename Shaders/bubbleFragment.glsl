@@ -11,8 +11,8 @@ in Vertex{
 out vec4 FragColor;
 
 void main(void) {
-	vec3 incidentDir = normalize(cameraPos - IN.worldPos);
+	vec3 incidentDir = normalize(IN.worldPos -cameraPos);
 	vec3 reflectDir = reflect(incidentDir, IN.normal);
 	FragColor = texture (cubeTex, normalize(reflectDir));
-	//FragColor = vec4(IN.normal, 1.0);
+	//FragColor = vec4( reflectDir , 1.0);
 }

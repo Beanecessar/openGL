@@ -1,11 +1,11 @@
 #pragma comment(lib, "nclgl.lib")
-#pragma comment(lib, "gltool_staticd.lib")
 
 #include "../../nclgl/window.h"
 #include "Renderer.h"
 
 int main() {
-	Window w("Course Work", 1600, 900, false);
+
+	Window w("Course Work", 1600, 900, true);
 	if (!w.HasInitialised()) {
 		return -1;
 	}
@@ -19,6 +19,22 @@ int main() {
 	w.ShowOSPointer(false);
 
 	while (w.UpdateWindow() && !Window::GetKeyboard()->KeyDown(KEYBOARD_ESCAPE)) {
+		if (Window::GetKeyboard()->KeyTriggered(KEYBOARD_P)) {
+			renderer.pause = !renderer.pause;
+		}
+		if (Window::GetKeyboard()->KeyTriggered(KEYBOARD_B)) {
+			renderer.postProcessEnable = !renderer.postProcessEnable;
+		}
+		if (Window::GetKeyboard()->KeyTriggered(KEYBOARD_LEFT)) {
+			renderer.SetCurrentScene((renderer.GetCurrentScene() + renderer.GetNumOfScene() - 1) % renderer.GetNumOfScene());
+		}
+		if (Window::GetKeyboard()->KeyTriggered(KEYBOARD_RIGHT)) {
+			renderer.SetCurrentScene((renderer.GetCurrentScene() + 1) % renderer.GetNumOfScene());
+		}
+		if (Window::GetKeyboard()->KeyTriggered(KEYBOARD_UP)) {
+			renderer.autoChangeScene = !renderer.autoChangeScene;
+		}
+
 		renderer.UpdateScene(w.GetTimer()->GetTimedMS());
 		renderer.RenderScene();
 	}

@@ -9,6 +9,9 @@
 
 class SceneNode {
 public:
+	void (*BeforeDrawCall) ();
+	void (*AfterDrawCall) ();
+
 	SceneNode(Mesh * m = NULL, Vector4 colour = Vector4(1, 1, 1, 1));
 	~SceneNode(void);
 
@@ -19,23 +22,39 @@ public:
 	Vector4 GetColour() const { return colour; }
 	void SetColour(Vector4 c) { colour = c; }
 
+	bool IsSkybox() const { return isSkybox; }
+	void SetSkybox(bool b) { isSkybox = b; }
+
 	Shader* GetShader() const { return shader; }
 	void SetShader(Shader* s) { shader = s; }
 
 	Light* GetLight() const { return light; }
 	void SetLight(Light* l) { light = l; }
 
-	void AddUniformfv(Uniformfv* ufv) {
-		uniformfv.push_back(ufv);
+	void AddUniform3fv(Uniform3fv* ufv) {
+		uniform3fv.push_back(ufv);
 	}
-	std::vector <Uniformfv *>::const_iterator GetUniformfvIteratorStart() {
-		return uniformfv.begin();
+	std::vector <Uniform3fv *>::const_iterator GetUniform3fvIteratorStart() {
+		return uniform3fv.begin();
 	}
-	std::vector <Uniformfv *>::const_iterator GetUniformfvIteratorEnd() {
-		return uniformfv.end();
+	std::vector <Uniform3fv *>::const_iterator GetUniform3fvIteratorEnd() {
+		return uniform3fv.end();
 	}
-	bool UniformfvIsEmpty() {
-		return uniformfv.empty();
+	bool Uniform3fvIsEmpty() {
+		return uniform3fv.empty();
+	}
+
+	void AddUniformf(Uniformf* uf) {
+		uniformf.push_back(uf);
+	}
+	std::vector <Uniformf *>::const_iterator GetUniformfIteratorStart() {
+		return uniformf.begin();
+	}
+	std::vector <Uniformf *>::const_iterator GetUniformfIteratorEnd() {
+		return uniformf.end();
+	}
+	bool UniformfIsEmpty() {
+		return uniformf.empty();
 	}
 
 	void AddUniformi(Uniformi* ui) {
@@ -50,9 +69,6 @@ public:
 	bool UniformiIsEmpty() {
 		return uniformi.empty();
 	}
-
-	bool CheckSkybox() const { return isSkybox; }
-	void SetSkybox(bool s) { isSkybox = s; }
 
 	Vector3 GetModelScale() const { return modelScale; }
 	void SetModelScale(Vector3 s) { modelScale = s; }
@@ -79,6 +95,10 @@ public:
 	void SetCameraDistance(float f) { distanceFromCamera = f; }
 
 	static bool CompareByCameraDistance(SceneNode *a, SceneNode * b) {
+		if (a->IsSkybox())
+			return true;
+		if (b->IsSkybox())
+			return false;
 		return (a->distanceFromCamera <
 			b->distanceFromCamera) ? true : false;
 	}
@@ -94,7 +114,8 @@ protected:
 	std::vector <SceneNode *> children;
 	float distanceFromCamera;
 	float boundingRadius;
-	bool isSkybox;
-	std::vector<Uniformfv *> uniformfv;
+	std::vector<Uniform3fv *> uniform3fv;
+	std::vector<Uniformf *> uniformf;
 	std::vector<Uniformi *> uniformi;
+	bool isSkybox;
 };

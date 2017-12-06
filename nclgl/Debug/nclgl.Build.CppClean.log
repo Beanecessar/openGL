@@ -1,24 +1,3 @@
-d:\cppproject\graphics code 2015\nclgl\debug\nclgl.pdb
-d:\cppproject\graphics code 2015\nclgl\debug\nclgl.idb
-d:\cppproject\graphics code 2015\nclgl\debug\camera.obj
-d:\cppproject\graphics code 2015\nclgl\debug\frustum.obj
-d:\cppproject\graphics code 2015\nclgl\debug\gametimer.obj
-d:\cppproject\graphics code 2015\nclgl\debug\heightmap.obj
-d:\cppproject\graphics code 2015\nclgl\debug\keyboard.obj
-d:\cppproject\graphics code 2015\nclgl\debug\matrix4.obj
-d:\cppproject\graphics code 2015\nclgl\debug\md5anim.obj
-d:\cppproject\graphics code 2015\nclgl\debug\md5filedata.obj
-d:\cppproject\graphics code 2015\nclgl\debug\md5mesh.obj
-d:\cppproject\graphics code 2015\nclgl\debug\md5node.obj
-d:\cppproject\graphics code 2015\nclgl\debug\mesh.obj
-d:\cppproject\graphics code 2015\nclgl\debug\mouse.obj
-d:\cppproject\graphics code 2015\nclgl\debug\objmesh.obj
-d:\cppproject\graphics code 2015\nclgl\debug\oglrenderer.obj
-d:\cppproject\graphics code 2015\nclgl\debug\plane.obj
-d:\cppproject\graphics code 2015\nclgl\debug\quaternion.obj
-d:\cppproject\graphics code 2015\nclgl\debug\scenenode.obj
-d:\cppproject\graphics code 2015\nclgl\debug\shader.obj
-d:\cppproject\graphics code 2015\nclgl\debug\window.obj
 d:\cppproject\opengl\nclgl\debug\nclgl.pdb
 d:\cppproject\opengl\nclgl\debug\nclgl.idb
 d:\cppproject\opengl\nclgl\debug\camera.obj
@@ -26,23 +5,23 @@ d:\cppproject\opengl\nclgl\debug\frustum.obj
 d:\cppproject\opengl\nclgl\debug\gametimer.obj
 d:\cppproject\opengl\nclgl\debug\heightmap.obj
 d:\cppproject\opengl\nclgl\debug\keyboard.obj
-d:\cppproject\opengl\nclgl\debug\matrix4.obj
 d:\cppproject\opengl\nclgl\debug\md5anim.obj
 d:\cppproject\opengl\nclgl\debug\md5filedata.obj
 d:\cppproject\opengl\nclgl\debug\md5mesh.obj
 d:\cppproject\opengl\nclgl\debug\md5node.obj
+d:\cppproject\opengl\nclgl\debug\matrix4.obj
 d:\cppproject\opengl\nclgl\debug\mesh.obj
 d:\cppproject\opengl\nclgl\debug\mouse.obj
 d:\cppproject\opengl\nclgl\debug\objmesh.obj
 d:\cppproject\opengl\nclgl\debug\oglrenderer.obj
+d:\cppproject\opengl\nclgl\debug\particle.obj
 d:\cppproject\opengl\nclgl\debug\plane.obj
 d:\cppproject\opengl\nclgl\debug\quaternion.obj
 d:\cppproject\opengl\nclgl\debug\scenenode.obj
 d:\cppproject\opengl\nclgl\debug\shader.obj
-d:\cppproject\graphics code 2015\graphics for games\debug\nclgl.lib
 d:\cppproject\opengl\nclgl\debug\window.obj
-d:\cppproject\opengl\graphics for games\debug\nclgl.pdb
 d:\cppproject\opengl\graphics for games\debug\nclgl.lib
+d:\cppproject\opengl\graphics for games\debug\nclgl.pdb
 d:\cppproject\opengl\nclgl\debug\nclgl.tlog\cl.command.1.tlog
 d:\cppproject\opengl\nclgl\debug\nclgl.tlog\cl.read.1.tlog
 d:\cppproject\opengl\nclgl\debug\nclgl.tlog\cl.write.1.tlog

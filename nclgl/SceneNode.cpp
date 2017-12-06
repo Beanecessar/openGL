@@ -9,21 +9,21 @@ SceneNode::SceneNode(Mesh * mesh, Vector4 colour) {
 	modelScale = Vector3(1, 1, 1);
 	boundingRadius = 1.0f;
 	distanceFromCamera = 0.0f;
-	isSkybox = false;
 }
 
 SceneNode::~SceneNode(void) {
 	for (unsigned int i = 0; i < children.size(); ++i) {
 		delete children[i];
 	}
-	for (unsigned int i = 0; i < uniformfv.size(); ++i) {
-		delete uniformfv[i];
+	for (unsigned int i = 0; i < uniform3fv.size(); ++i) {
+		delete uniform3fv[i];
 	}
 	for (unsigned int i = 0; i < uniformi.size(); ++i) {
 		delete uniformi[i];
 	}
-	delete shader;
-	delete light;
+	delete mesh;
+	//delete shader;
+	//delete light;
 }
 
 void SceneNode::AddChild(SceneNode * s) {
@@ -42,7 +42,7 @@ void SceneNode::Update(float msec) {
 	else { // Root node , world transform is local transform !
 		worldTransform = transform;
 	}
-	for (vector < SceneNode * >::iterator i = children.begin();
+	for (vector <SceneNode *>::iterator i = children.begin();
 		i != children.end(); ++i) {
 		(*i) -> Update(msec);
 	}

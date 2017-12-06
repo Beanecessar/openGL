@@ -32,7 +32,7 @@ public:
 
 	~Camera(void){};
 
-	void UpdateCamera(float msec = 10.0f);
+	void UpdateCamera(float msec = 10.0f, float transSpeed = 1.0f);
 
 	//Builds a view matrix for the current camera variables, suitable for sending straight
 	//to a vertex shader (i.e it's already an 'inverse camera matrix').
@@ -40,6 +40,7 @@ public:
 
 	//Gets position in world space
 	Vector3 GetPosition() const { return position;}
+	Vector3* GetPositionPtr() { return &position; }
 	//Sets position in world space
 	void	SetPosition(Vector3 val) { position = val;}
 
